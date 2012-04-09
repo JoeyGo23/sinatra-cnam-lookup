@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <link href='assets/application.css' media='screen' rel='stylesheet' type='text/css' />
+    <title>Verify by CNAM</title>
+    <%= yield_content :style %>
+  </head>
+  <body>
+    <div class="container">
+      <%= yield %>
+    </div>
+  </body>
+</html>
+
+<script type="text/javascript" src="assets/application.js"></script>
+<%= yield_content :javascript %>
