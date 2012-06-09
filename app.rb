@@ -5,6 +5,7 @@ require 'sprockets'
 require 'open-uri'
 require 'json'
 require './lib/sprockets_sinatra_middleware'
+require './cnam_checker.rb'
 
 helpers Sinatra::ContentFor2
 
@@ -38,29 +39,4 @@ post '/' do
     @errors << "Please provide a full name and telephone number to verify."
   end
   erb :index
-end
-
-class Checker
-  attr_reader :results
-
-  def initialize(name, tel)
-    @results = cnam_results(tel)
-    @name = name.downcase
-  end
-
-  def pass?
-    @results == @name
-  end
-
-  private
-
-  def cnam_results(tel)
-    begin
-      response = open("https://api.opencnam.com/v1/phone/#{tel}?format=json").read
-      results = JSON.parse(response)
-      results["cnam"].downcase.split(" ").reverse.join(" ")
-    rescue
-      nil
-    end
-  end
 end
